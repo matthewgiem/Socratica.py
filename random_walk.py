@@ -11,17 +11,23 @@ def random_walk(n):
     return abs(x) + abs(y)
 
 
-answer = {}
-for x in range(11,15):
-    throw_away = 0
-    for y in range(1000000):
-        throw_away += random_walk(x)
-    answer[x] = throw_away/1000000
-
-
-print(answer)
+# answer = {}
+# for x in range(11,15):
+#     throw_away = 0
+#     for y in range(1000000):
+#         throw_away += random_walk(x)
+#     answer[x] = throw_away/1000000
+# print(answer)
 
 
 # for 1000000 times values are the following
 # {11: 3.701996, 12: 3.867038, 13: 4.02745, 14: 4.18464}
 # {11: 3.699582, 12: 3.866506, 13: 4.029168, 14: 4.183024}
+
+number_of_walks = 100000
+for x in range(13,25):
+    number_of_walks_home = 0
+    for _ in range(number_of_walks):
+        if random_walk(x) >= 4:
+            number_of_walks_home += 1
+    print("{} has a %{}".format(x, 100*number_of_walks_home/number_of_walks))
