@@ -13,3 +13,10 @@ class TestCircleArea(unittest.TestCase):
     def test_values(self):
         # Make sure value errors are raised when necessary
         self.assertRaises(ValueError, circle_area, -2)
+
+    # test must come first or python wont recognize it as a test 
+    def test_type(self):
+        # Make sure type errors are raised when necessary
+        self.assertRaises(TypeError, circle_area, 3+5j)
+        self.assertRaises(TypeError, circle_area, True)
+        self.assertRaises(TypeError, circle_area, "radius")
