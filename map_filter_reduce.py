@@ -1,5 +1,6 @@
 import math
 import statistics
+from functools import reduce
 
 def area(r):
     """Area of a circle with radius 'r'"""
@@ -49,3 +50,15 @@ countries = ["", "Argentina", "", "Brazil", "Chile", "", "Columbia",
             "", "Ecuador", "", "", "Venezuela"]
 
 print(list(filter(None, countries)))
+
+# reduce Function
+
+prime_numbers = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
+
+multiplier = lambda x, y: x*y
+print(reduce(multiplier, prime_numbers))
+
+product = 1
+for x in prime_numbers:
+    product *= x
+print(product)
