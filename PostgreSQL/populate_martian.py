@@ -3,7 +3,7 @@ password = open('database_password.txt', 'r').read()
 
 def create_and_populate_martian_tables():
     commands = [
-    # create base table
+    create base table
         """
         CREATE TABLE base
         (
@@ -24,6 +24,88 @@ def create_and_populate_martian_tables():
             FOREIGN KEY (base_id)
             REFERENCES base (base_id)
         );""",
+    create visitor table
+        """
+        CREATE TABLE visitor
+        (
+            visitor_id SERIAL PRIMARY KEY,
+            host_id integer,
+            first_name character varying,
+            last_name character varying,
+            FOREIGN KEY (host_id)
+            REFERENCES martian (martian_id)
+        )
+        ;""",
+    # create supply table
+    """
+    CREATE TABLE supply
+    (
+        supply_id SERIAL PRIMARY KEY,
+        name character varying,
+        description character varying,
+        quantity integer
+    )
+    ;""",
+    # create inventory table
+    """
+    CREATE TABLE inventory
+    (
+        base_id integer,
+        supply_id integer,
+        quantity integer,
+        FOREIGN KEY (base_id)
+        REFERENCES base (base_id),
+        FOREIGN KEY (supply_id)
+        REFERENCES supply (supply_id)
+    )
+    ;""",
+    # populate supply table
+    """
+    INSERT INTO
+        supply (supply_id, name, description, quantity)
+    VALUES
+        (1, 'Solar Panel', 'Standard 1X1 meter cell', 912),
+        (2, 'Water Filter', $$This takes things out of your water so it's drinkable$$, 6),
+        (3, 'Duct Tape', 'A 10 meter roll of duct tape for ALL your repairs.', 951),
+        (4, 'Ketchup', $$It's ketchup...$$, 206),
+        (5, 'Battery Cell', 'Standard 1000 kAh battery cell for power grid (heavy item).', 17),
+        (6, 'USB 6.0 Cable', 'Carbon fiber coated / 15 TBps spool', 42),
+        (7, 'Fuzzy Duster', 'It gets dusty around here. Be prepared!', 19),
+        (8, 'Mars Bars', 'The ORIGINAL nutrient bar made with the finest dioengineered ingredients.', 3801),
+        (9, 'Air Filter', 'Removes 99% of all Martian dust from your ventilation unit', 23),
+        (10, $$Famous Ray's Frozen Pizza$$, 'this Martian favorite is covered in all your favorite toppings. 1 flavor only.', 823)
+    ;""",
+    # populate inventory table
+    """
+    INSERT INTO
+        inventory (base_id, supply_id, quantity)
+    VALUES
+        (1, 1, 8),
+        (1, 3, 5),
+        (1, 5, 1),
+        (1, 6, 2),
+        (1, 8, 12),
+        (1, 9, 1),
+        (2, 4, 5),
+        (2, 8, 62),
+        (2, 10, 37),
+        (3, 2, 11),
+        (3, 7, 2),
+        (4, 10, 91)
+    ;""",
+    # populate visitor table
+        """
+        INSERT INTO
+            visitor (visitor_id, host_id, first_name, last_name)
+        VALUES
+            (1, 7, 'George', 'Ambrose'),
+            (2, 1, 'Kris', 'Cardenas'),
+            (3, 9, 'Priscilla', 'Lane'),
+            (4, 11, 'Jane', 'Thornton'),
+            (5, NULL, 'Doug', 'Stavenger'),
+            (6, NULL, 'Jamie', 'Waterman'),
+            (7, 8, 'Martin', 'Humphries')
+        ;""",
     # populate base table
         """
         INSERT INTO
@@ -69,5 +151,5 @@ def create_and_populate_martian_tables():
         if conn is not None:
             conn.close()
 
-# if __name__ == '__main__':
-#     create_and_populate_martian_tables()
+if __name__ == '__main__':
+    create_and_populate_martian_tables()
