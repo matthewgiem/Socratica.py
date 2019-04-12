@@ -59,7 +59,22 @@ def create_and_populate_martian_tables():
         REFERENCES supply (supply_id)
     )
     ;""",
-    # populate supply table
+    create martian_confidential
+    """
+    CREATE TABLE martian_confidential
+    (
+        martian_id SERIAL PRIMARY KEY,
+        first_name character varying,
+        last_name character varying,
+        base_id integer,
+        super_id integer,
+        salary integer,
+        dna_id character varying,
+        FOREIGN KEY (base_id)
+        REFERENCES base (base_id)
+    )
+    ;""",
+    # # populate supply table
     """
     INSERT INTO
         supply (supply_id, name, description, quantity)
@@ -135,7 +150,26 @@ def create_and_populate_martian_tables():
             (11, 'Nathaniel', 'York', 4, 2),
             (12, 'Elon','Musk' , 2, NULL),
             (13, 'John', 'Carter', NULL, 8)
-        ;"""
+        ;""",
+        populate martian_confidential
+        """
+        INSERT INTO
+            martian_confidential (martian_id, first_name, last_name, base_id, super_id, salary, dna_id)
+        VALUES
+        (1, 'Ray', 'Bradbury', 1, NULL, 155900, 'gctaggaatagaatctcctgttg'),
+        (2, 'John', 'Black', 4, 10, 120100, 'cagttaatggttgaagctggggatt'),
+        (3, 'Samuel', 'Hinkston', 4, 2, 110000, 'cgaagcgctagatgctgtgttgtag'),
+        (4, 'Jeff', 'Spender', 1, 9, 10000, 'gactaatgtcttcgtggattgcaga'),
+        (5, 'Sam', 'Parkhill', 2, 12, 125000, 'gttactttgcgaaagccgtggctac'),
+        (6, 'Elma', 'Parkhill', 3, 8, 137000, 'gcaggatggaagcaactgccatat'),
+        (7, 'Melissa', 'Lewis', 1, 1, 145250, 'cttcgatcgtcaatggagtccggac'),
+        (8, 'Mark', 'Watney', 3, NULL, 121100, 'gacacgaggcgaactatgtcgcggc'),
+        (9, 'Beth', 'Johanssen', 1, 1, 130000, 'cttagactaggtgtgaaacccgtta'),
+        (10, 'Chris', 'Beck', 4, NULL, 125000, 'gggggggttacgacgaggaatccat'),
+        (11, 'Nathaniel', 'York', 4, 2, 105000, 'ggctccctgggcgggatattggatg'),
+        (12, 'Elon', 'Musk', 2, NULL, 155800, 'atctgcttggatcaatagcgctgcg'),
+        (13, 'John', 'Carter', NULL, 8, 1295000, 'ccaatcgtgcgagtcgcgatagtct')
+        """
     ]
     conn = None
     try:
